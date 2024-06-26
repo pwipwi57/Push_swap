@@ -6,11 +6,11 @@
 /*   By: tlamarch <tlamarch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 18:20:41 by tlamarch          #+#    #+#             */
-/*   Updated: 2024/04/11 19:22:45 by tlamarch         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:47:38 by tlamarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "checker_bonus.h"
 
 t_liste	*parsing(int argc, char **argv)
 {
@@ -109,10 +109,8 @@ int	verif_leng(char *nbri)
 
 	i = 0;
 	j = 0;
-	if ((nbri[i] == '-' || nbri[i] == '+') && nbri[i + 1])
+	if ((nbri[0] == '-' || nbri[0] == '+') && nbri[1])
 		i++;
-	else
-		return (0);
 	while (nbri[i] == '0')
 		i++;
 	while (nbri[i + j])

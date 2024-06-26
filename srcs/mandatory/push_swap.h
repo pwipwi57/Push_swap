@@ -6,7 +6,7 @@
 /*   By: tlamarch <tlamarch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:06:50 by tlamarch          #+#    #+#             */
-/*   Updated: 2024/04/08 17:16:13 by tlamarch         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:55:30 by tlamarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <limits.h>
-# include "./libft/libft.h"
+# include "../../libft/libft.h"
 
 typedef struct s_liste
 {
@@ -87,14 +87,6 @@ void	r_rotate(t_liste **a);
 void	rra(t_liste **a);
 void	rrb(t_liste **b);
 void	rrr(t_liste **a, t_liste **b);
-
-// radix.c
-// void	radixa(t_liste **a, t_liste **b, int gr, int unit);
-// void	radixb(t_liste **a, t_liste **b, int gr, int unit);
-// void	s_radixa(t_liste **a, t_liste **b, int gr, int unit);
-// void	s_radixb(t_liste **a, t_liste **b, int gr, int unit);
-// int		test_radix(t_liste **b, int gr, int unit);
-// int		max_nbrradix(t_liste **a);
 
 // rotate.c
 void	rotate(t_liste **a);

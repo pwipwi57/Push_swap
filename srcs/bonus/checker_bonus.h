@@ -6,7 +6,7 @@
 /*   By: tlamarch <tlamarch@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 17:36:03 by tlamarch          #+#    #+#             */
-/*   Updated: 2024/04/09 04:02:40 by tlamarch         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:55:42 by tlamarch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <limits.h>
-# include "./libft/libft.h"
+# include "../../libft/libft.h"
 
 typedef struct s_liste
 {
@@ -67,6 +67,27 @@ void	pa(t_liste **a, t_liste **b);
 void	pb(t_liste **a, t_liste **b);
 void	all_pa(t_liste **a, t_liste **b);
 
+// q_insert_utils.c
+void	choose(t_liste *a, t_liste *b, int *dir, int *nbr);
+void	s_choose(t_liste *a, t_liste *el, int *best, int *nbr);
+int		count_move1(t_liste *a, int nbr, int i);
+int		count_move2(t_liste *a, int nbr, int i);
+int		min_nbr(t_liste **a);
+
+// q_insert.c
+void	insert(t_liste **a, t_liste **b, int pivot, int min);
+int		end_insert(t_liste **b, int min);
+void	insert_pivot(t_liste **a, t_liste **b);
+void	move(t_liste **a, t_liste **b, int dir, int nbr);
+int		test_rank_el(t_liste *b);
+
+// quicksort.c
+void	quicksort(t_liste **a, t_liste **b, int rank);
+int		test_4_last(t_liste **a);
+void	s_quicksort(t_liste **a, t_liste **b, int pivot, int rank);
+void	initpivot(t_liste **a, int *min, int *pivot_1, int *pivot_2);
+int		max_nbr(t_liste **a);
+
 // r_rotate.c
 void	r_rotate(t_liste **a);
 void	rra(t_liste **a);
@@ -90,6 +111,18 @@ void	swap(t_liste **a);
 void	sa(t_liste **a);
 void	sb(t_liste **b);
 void	ss(t_liste **a, t_liste **b);
+
+// treatment.c
+void	treatment_ps(t_liste **a);
+void	s_treatment(t_liste **a, t_liste **b);
+int		lengstack(t_liste **a);
+
+// treatment_2.c
+void	treat3el(t_liste **a);
+void	treat3el_bis(t_liste **a, t_liste **b);
+void	treat4el(t_liste **a, t_liste **b);
+void	treat5el(t_liste **a, t_liste **b);
+void	init_min(t_liste *a, int *min1, int *min2);
 
 // utils.c
 int		ft_atoi2(char *nptr);

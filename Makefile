@@ -6,56 +6,98 @@
 #    By: tlamarch <tlamarch@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/08 18:10:31 by tlamarch          #+#    #+#              #
-#    Updated: 2024/04/11 17:56:04 by tlamarch         ###   ########.fr        #
+#    Updated: 2024/06/26 16:58:09 by tlamarch         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC	= cc
-CFLAGS	= -Wall -Wextra -Werror -g
-OBJS	= ${SRCS:.c=.o}
-OBJBONUS = ${SRCBONUS:.c=.o}
-SRCS	= ft_fr.c ft_fr_2.c list.c parsing.c push_swap.c push.c q_insert.c quicksort.c\
-r_rotate.c rotate.c split.c swap.c treatment.c treatment2.c utils.c q_insert_utils.c
-SRCBONUS = ft_fr.c ft_fr_2.c list.c parsing.c checker_bonus.c push.c r_rotate.c rotate.c\
-split.c swap.c utils.c
-SRCLIBFT = atoi bzero calloc isalnum isalpha isascii isdigit isprint itoa memchr memcmp\
-memcpy memmove memset putchar_fd putendl_fd putnbr_fd putstr_fd split strchr strdup\
-striteri strjoin strlcat strlcpy strlen strmapi strncmp strnstr strrchr strtrim substr\
-lstnew lstadd_front lstsize lstlast lstadd_back tolower toupper lstdelone lstclear lstiter lstmap
-SRCPRINT = printf printf_hex printf_hex2 printf_treat printf_treat2\
-printf_treat3 printf_util printf_util2
-SRCGNL = get_next_line get_next_line_utils
 NAME = push_swap
-NAMEBONUS = checker
-LIBFTPREFIX	= $(addprefix libft/ft_, $(SRCLIBFT)) $(addprefix libft/ft_, $(SRCPRINT)) $(addprefix libft/, $(SRCGNL))
-LIBFTSRCS = $(addsuffix .c, $(LIBFTPREFIX))
-LIBFT_HEADERS = libft/libft.h
-RM	= rm -rf
+BONUS_NAME = checker
+CC = cc
 
-all: ${NAME} 
+FLAGS = -Wall -Werror -Wextra -g
 
-bonus: ${NAMEBONUS}
+LIBFT_FLAG = libft/libft.a
 
-.c.o:
-	${CC} -c ${CFLAGS} $< -o ${<:.c=.o}
+SRCS_MDIR = srcs/mandatory/
+SRCS_BDIR = srcs/bonus/
+OBJS_MDIR = objs/mandatory/
+OBJS_BDIR = objs/bonus/
 
-${NAME}: ${OBJS} ${LIBFTSRCS} ${LIBFT_HEADERS} 
-	$(MAKE) -C ./libft
-	${CC} ${OBJS} libft/libft.a -o ${NAME}
+HEADER = $(SRCS_MDIR)push_swap.h
+BONUS_HEADER = $(SRCS_BDIR)checker_bonus.h
 
-${NAMEBONUS}: ${OBJBONUS} ${LIBFTSRCS} ${LIBFT_HEADERS}
-	$(MAKE) -C ./libft
-	${CC} ${OBJBONUS} libft/libft.a -o ${NAMEBONUS}
+SRCS = $(SRCS_MDIR)ft_fr_2.c \
+		$(SRCS_MDIR)ft_fr.c \
+		$(SRCS_MDIR)i_push.c \
+		$(SRCS_MDIR)i_rotate.c \
+		$(SRCS_MDIR)i_rrotate.c \
+		$(SRCS_MDIR)i_swap.c \
+		$(SRCS_MDIR)list.c \
+		$(SRCS_MDIR)parsing.c \
+		$(SRCS_MDIR)push_swap.c \
+		$(SRCS_MDIR)q_insert_utils.c \
+		$(SRCS_MDIR)q_insert.c \
+		$(SRCS_MDIR)quicksort.c \
+		$(SRCS_MDIR)split.c \
+		$(SRCS_MDIR)treatment.c \
+		$(SRCS_MDIR)treatment2.c \
+		$(SRCS_MDIR)utils.c \
 
-clean:
-	${RM} ${OBJS} ${OBJBONUS}
-	$(MAKE) clean -C ./libft
+BONUS_SRCS = $(SRCS_BDIR)ft_fr_2.c \
+		$(SRCS_BDIR)ft_fr.c \
+		$(SRCS_BDIR)i_push.c \
+		$(SRCS_BDIR)i_rotate.c \
+		$(SRCS_BDIR)i_rrotate.c \
+		$(SRCS_BDIR)i_swap.c \
+		$(SRCS_BDIR)list.c \
+		$(SRCS_BDIR)parsing.c \
+		$(SRCS_BDIR)q_insert_utils.c \
+		$(SRCS_BDIR)q_insert.c \
+		$(SRCS_BDIR)quicksort.c \
+		$(SRCS_BDIR)split.c \
+		$(SRCS_BDIR)treatment.c \
+		$(SRCS_BDIR)treatment2.c \
+		$(SRCS_BDIR)utils.c \
+		$(SRCS_BDIR)checker_bonus.c \
 
-fclean: clean
-	${RM} ${NAME} ${NAMEBONUS}
-	$(MAKE) fclean -C ./libft
+OBJS = $(patsubst $(SRCS_MDIR)%.c,$(OBJS_MDIR)%.o,$(SRCS))
 
-re : fclean all
+BONUS_OBJS = $(patsubst $(SRCS_BDIR)%.c,$(OBJS_BDIR)%.o,$(BONUS_SRCS))
+
+$(OBJS_MDIR)%.o : $(SRCS_MDIR)%.c $(HEADER) | $(OBJS_MDIR)
+	$(CC) $(FLAGS) -Ilibft -o $@ -c $<
+
+$(OBJS_BDIR)%.o : $(SRCS_BDIR)%.c $(BONUS_HEADER) | $(OBJS_BDIR)
+	$(CC) $(FLAGS) -Ilibft -o $@ -c $<
+
+$(NAME): $(OBJS) $(HEADER)
+	make -C libft/
+	$(CC) $(FLAGS) -o $@ $(OBJS) $(LIBFT_FLAG)
+
+$(BONUS_NAME): $(BONUS_OBJS) $(BONUS_HEADER)
+	make -C libft/
+	$(CC) $(FLAGS) -o $@ $(BONUS_OBJS) $(LIBFT_FLAG)
+
+$(OBJS_MDIR) :
+	mkdir -p $(OBJS_MDIR)
+
+$(OBJS_BDIR) :
+	mkdir -p $(OBJS_BDIR)
+
+all : $(NAME) $(BONUS_NAME)
+
+bonus : $(BONUS_NAME)
+
+clean :
+	make -C libft/ clean
+	rm -rf $(OBJS_MDIR) $(OBJS_BDIR)
+
+fclean : clean
+	make -C libft/ fclean
+	rm -f $(NAME) $(BONUS_NAME)
+	rm -rf $(OBJS_MDIR) $(OBJS_BDIR)
+
+re : fclean $(OBJS_MDIR) $(NAME)
 
 rebonus : fclean bonus
 
