@@ -23,9 +23,8 @@ int	main(int argc, char **argv)
 		return (1);
 	a = &elem;
 	a = checker(a);
-	if (a == NULL)
-		return (1);
-	ft_lstclear2(a);
+	if (a)
+		ft_lstclear2(a);
 	return (0);
 }
 
@@ -38,8 +37,6 @@ t_liste	**checker(t_liste **a)
 	elnul = NULL;
 	b = &elnul;
 	line = get_next_line(0);
-	if (line == NULL)
-		return (ft_lstclear2(a), ft_lstclear2(b), NULL);
 	while (line != NULL)
 	{
 		if (!verif_instruct(a, b, line))
@@ -50,8 +47,8 @@ t_liste	**checker(t_liste **a)
 		free(line);
 		line = get_next_line(0);
 	}
-	if (!checksorted(a, b))
-		return (NULL);
+	if (checksorted(a, b))
+		return (ft_lstclear2(a), NULL);
 	return (a);
 }
 
@@ -99,5 +96,6 @@ int	checksorted(t_liste **a, t_liste **b)
 			return (ft_lstclear2(b), ft_printf("KO\n"), 1);
 	}
 	ft_printf("OK\n");
-	return (1);
+	ft_lstclear2(b);
+	return (0);
 }
